@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лидия и Валентин — 08.05.2026</title>
+    
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    
+    <!-- АЛЬТЕРНАТИВНАЯ ССЫЛКА НА КОНФЕТТИ (Cloudflare) -->
+    <script src="https://cdnjs.cloudflare.com"></script>
+
+    <style>
+        :root {
+            --gold: #c5a059;
+            --dark: #2c2c2c;
+            --white: #ffffff;
+            --title-font: 'Playfair Display', serif;
+            --text-font: 'Montserrat', sans-serif;
+        }
+        body, html { margin: 0; padding: 0; font-family: var(--text-font); background-color: var(--white); color: var(--dark); overflow-x: hidden; }
+        .intro-screen {
+            height: 100vh; width: 100%; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+            background-size: cover; background-position: center;
+            position: fixed; top: 0; left: 0; transition: all 1s ease-in-out;
+            color: white; z-index: 100;
+        }
+        .intro-screen::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.4); z-index: -1; }
+        .hidden { opacity: 0; visibility: hidden; transform: scale(1.1); }
+        h1 { font-family: var(--title-font); font-size: clamp(2rem, 7vw, 4.5rem); margin-bottom: 30px; line-height: 1.2; }
+        .btn {
+            background: var(--white); color: var(--dark); border: none;
+            padding: 18px 40px; font-size: 14px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 2px;
+            border-radius: 50px; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .btn:hover { background: var(--gold); color: white; transform: translateY(-3px); }
+        #step3 { background: var(--white); color: var(--dark); z-index: 110; }
+        #step3::before { display: none; }
+        #main-site { display: none; opacity: 0; transition: opacity 2s ease; }
+        .header-main { height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f4f7f9; text-align: center; }
+        .section { padding: 80px 20px; max-width: 800px; margin: 0 auto; text-align: center; }
+        #timer { display: flex; justify-content: center; gap: 15px; margin-top: 30px; }
+        .timer-item { background: white; padding: 15px; border-radius: 12px; min-width: 80px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .timer-item span { display: block; font-size: 2rem; font-weight: 600; color: var(--gold); }
+        .circle-container { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .circle { width: 45px; height: 45px; border-radius: 50%; border: 1px solid #eee; }
+    </style>
+</head>
+<body>
+
+    <div id="step1" class="intro-screen" style="background-image: url('photo1.jpg');">
+        <h1>Я думала когда же<br>это случится...</h1>
+        <button class="btn" onclick="next(1)">Что произошло?</button>
+    </div>
+
+    <div id="step2" class="intro-screen hidden" style="background-image: url('photo2.jpg');">
+        <h1>Это случилось!!!!!!</h1>
+        <button class="btn" onclick="next(2)">Да что же случилось?</button>
+    </div>
+
+    <div id="step3" class="intro-screen hidden">
+        <h1 style="color: var(--dark);">Мы решили расписаться</h1>
+    </div>
+
+    <div id="main-site">
+        <div class="header-main">
+            <p style="letter-spacing: 5px; text-transform: uppercase; color: #888;">Приглашение на свадьбу</p>
+            <h1 style="color: var(--dark); margin: 15px 0;">Лидия & Валентин</h1>
+            <p style="font-size: 1.5rem; color: var(--gold); font-family: var(--title-font);">08.05.2026</p>
+            <div id="timer">
+                <div class="timer-item"><span id="days">00</span>дней</div>
+                <div class="timer-item"><span id="hours">00</span>часов</div>
+                <div class="timer-item"><span id="minutes">00</span>мин</div>
+            </div>
+        </div>
+
+        <section class="section">
+            <h2 style="font-family: var(--title-font); font-size: 2.5rem;">Дорогие наши друзья!</h2>
+            <p>Мы будем очень рады видеть вас на торжестве, посвященном нашему бракосочетанию.</p>
+        </section>
+
+        <section class="section" style="background: #fafafa; border-radius: 30px; margin-bottom: 40px;">
+            <h2 style="font-family: var(--title-font); font-size: 2.2rem;">Где и когда</h2>
+            <p style="font-size: 1.3rem; line-height: 1.8;">
+                <b style="color: var(--gold);">8 мая 2026 года</b><br>
+                Начало торжества в 10:10<br>
+                г. Минск, проспект Газеты Правды, 29
+            </p>
+        </section>
+
+        <footer style="text-align: center; padding: 80px 20px; color: #bbb; font-style: italic;">
+            До встречи на нашем празднике!
+        </footer>
+    </div>
+
+    <script>
+        function next(step) {
+            if (step === 1) {
+                document.getElementById('step1').classList.add('hidden');
+                document.getElementById('step2').classList.remove('hidden');
+            } else {
+                document.getElementById('step2').classList.add('hidden');
+                document.getElementById('step3').classList.remove('hidden');
+                
+                // Запуск мишуры
+                runCelebration();
+                
+                setTimeout(() => {
+                    document.getElementById('step3').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('step3').style.display = 'none';
+                        const main = document.getElementById('main-site');
+                        main.style.display = 'block';
+                        setTimeout(() => main.style.opacity = '1', 50);
+                    }, 800);
+                }, 6000);
+            }
+        }
+
+        function runCelebration() {
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 300 };
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+
+                var particleCount = 50 * (timeLeft / duration);
+                // Проверка на случай, если библиотека все же не подгрузилась
+                if (window.confetti) {
+                    confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+                }
+            }, 250);
+        }
+
+        const weddingDate = new Date("May 8, 2026 16:00:00").getTime();
+        function updateTimer() {
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+            if (diff > 0) {
+                document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('minutes').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            }
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+    </script>
+</body>
+</html>
